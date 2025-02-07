@@ -42,7 +42,10 @@ public class AnimalService {
   }
 
   public void mostrarAnimalesAgrupados() {
-    List<Animal> animales = jsonDatabase.cargarAnimales();
+    if (animales == null || animales.isEmpty()) {
+      animales = jsonDatabase.cargarAnimales();
+    }
+
     Map<String, List<Animal>> grupos = new HashMap<>();
 
     for (Animal animal : animales) {
