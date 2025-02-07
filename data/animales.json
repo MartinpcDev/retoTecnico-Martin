@@ -1,0 +1,21 @@
+[ {
+  "nombre" : "Condor",
+  "onomatopeya" : "Grito",
+  "tipo" : "volador"
+}, {
+  "nombre" : "Vaca",
+  "onomatopeya" : "Muuu",
+  "tipo" : "terrestre"
+}, {
+  "nombre" : "Tigre",
+  "onomatopeya" : "Rugido",
+  "tipo" : "terrestre"
+}, {
+  "nombre" : "Oveja",
+  "onomatopeya" : "Balar",
+  "tipo" : "terrestre"
+}, {
+  "nombre" : "Ballena",
+  "onomatopeya" : "Gru-Gru",
+  "tipo" : "acuatico"
+} ]

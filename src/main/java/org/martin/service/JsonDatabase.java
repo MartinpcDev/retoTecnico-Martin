@@ -11,13 +11,22 @@ import org.springframework.stereotype.Service;
 @Service
 public class JsonDatabase {
 
-  private static final String FILE_PATH = "src/main/resources/animales.json";
+  private final String filePath;
   private final ObjectMapper objectMapper = new ObjectMapper();
+
+  public JsonDatabase() {
+    this.filePath = "data/animales.json";
+  }
+
+  public JsonDatabase(String filePath) {
+    this.filePath = filePath;
+  }
 
   public List<Animal> cargarAnimales() {
     try {
-      File file = new File(FILE_PATH);
+      File file = new File(filePath);
       if (!file.exists()) {
+        file.getParentFile().mkdirs();
         file.createNewFile();
         return List.of();
       }
@@ -30,7 +39,8 @@ public class JsonDatabase {
 
   public void guardarAnimales(List<Animal> animales) {
     try {
-      File file = new File(FILE_PATH);
+      File file = new File(filePath);
+      file.getParentFile().mkdirs();
       objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, animales);
     } catch (IOException e) {
       throw new RuntimeException("Error al escribir el archivo JSON", e);

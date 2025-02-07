@@ -14,26 +14,29 @@ import org.springframework.stereotype.Service;
 public class AnimalService {
 
   private final JsonDatabase jsonDatabase;
-  private final List<Animal> animales;
+  private List<Animal> animales;
 
-  public AnimalService(JsonDatabase jsonDatabase, List<Animal> animals) {
+  public AnimalService(JsonDatabase jsonDatabase) {
     this.jsonDatabase = jsonDatabase;
     this.animales = jsonDatabase.cargarAnimales();
   }
 
   public List<Animal> obtenerAnimales() {
-    return jsonDatabase.cargarAnimales();
+    if (animales == null || animales.isEmpty()) {
+      animales = jsonDatabase.cargarAnimales();
+    }
+    return animales;
   }
 
   public void agregarAnimal(String nombre, String tipo, String onomatopeya) {
+    Animal animal = switch (tipo.toLowerCase()) {
+      case "terrestre" -> new Terrestre(nombre, onomatopeya);
+      case "acuatico" -> new Acuatico(nombre, onomatopeya);
+      case "volador" -> new Volador(nombre, onomatopeya);
+      default -> null;
+    };
 
-    switch (tipo.toLowerCase()) {
-      case "terrestre" -> animales.add(new Terrestre(nombre, onomatopeya));
-      case "acuatico" -> animales.add(new Acuatico(nombre, onomatopeya));
-      case "volador" -> animales.add(new Volador(nombre, onomatopeya));
-      default -> System.out.println("⚠ Tipo de animal desconocido: " + tipo);
-    }
-
+    animales.add(animal);
     jsonDatabase.guardarAnimales(animales);
     System.out.println("✅ Animal agregado correctamente.");
   }
